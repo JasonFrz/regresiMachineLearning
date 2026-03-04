@@ -4,17 +4,12 @@ import matplotlib.pyplot as plt
 import os
 
 def load_data(filename):
-    """
-    Membaca data dari Excel dan membersihkan format angka (koma ke titik).
-    """
     if not os.path.exists(filename):
-        print(f"Error: File '{filename}' tidak ditemukan.")
+        print(f"    Error: File '{filename}' tidak ditemukan.")
         return None, None
 
     try:
-        df = pd.read_excel(filename)
-    except ImportError:
-        df = pd.read_excel(filename)
+        df = pd.read_excel(filename, engine="openpyxl")
     except Exception as e:
         print(f"Gagal membaca file: {e}")
         return None, None
@@ -47,9 +42,6 @@ def compute_cost(X, y, theta0, theta1):
     return cost
 
 def gradient_descent(X, y, theta0, theta1, learning_rate, iterations):
-    """
-    Melakukan update parameter theta0 dan theta1 secara iteratif.
-    """
     m = len(y)
     cost_history = []
     
@@ -75,7 +67,7 @@ def gradient_descent(X, y, theta0, theta1, learning_rate, iterations):
     return theta0, theta1, cost_history
 
 def main():
-    filename = '20489_DiamondDataset.xlsx'
+    filename = '20489_Diamond Dataset.xlsx'
     X, y = load_data(filename)
     
     if X is None:
